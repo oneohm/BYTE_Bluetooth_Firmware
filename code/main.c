@@ -14,6 +14,8 @@
     http://github.com/oneohm/BYTE_Bluetooth_Firmware
 */
 #include "main.h"
+#include "BLE.h"
+
 
 APP_TIMER_DEF(m_battery_timer_id);                                                  /**< Battery timer. */
 BLE_BAS_DEF(m_bas);                                                                 /**< Battery service instance. */
