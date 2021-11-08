@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define DEVICE_NAME                     "nRF5_Mouse"                                /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                     "BYTE V2"                                /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME               "NordicSemiconductor"                       /**< Manufacturer. Will be passed to Device Information Service. */
 
 #define APP_BLE_OBSERVER_PRIO           3                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
@@ -74,5 +74,37 @@
 
 #define APP_ADV_FAST_DURATION           3000                                        /**< The advertising duration of fast advertising in units of 10 milliseconds. */
 #define APP_ADV_SLOW_DURATION           18000                                       /**< The advertising duration of slow advertising in units of 10 milliseconds. */
+
+
+void whitelist_set(pm_peer_id_list_skip_t skip);
+void identities_set(pm_peer_id_list_skip_t skip);
+void delete_bonds(void);
+void advertising_start(bool erase_bonds);
+void pm_evt_handler(pm_evt_t const * p_evt);
+void service_error_handler(uint32_t nrf_error);
+void ble_advertising_error_handler(uint32_t nrf_error);
+void gap_params_init(void);
+void gatt_init(void);
+void nrf_qwr_error_handler(uint32_t nrf_error);
+void qwr_init(void);
+void dis_init(void);
+void bas_init(void);
+void hids_init(void);
+void services_init(void);
+void conn_params_error_handler(uint32_t nrf_error);
+void conn_params_init(void);
+void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t * p_evt);
+void on_adv_evt(ble_adv_evt_t ble_adv_evt);
+void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context);
+void ble_stack_init(void);
+void peer_manager_init(void);
+void advertising_init(void);
+void scheduler_init(void);
+void mouse_movement_send(int16_t x_delta, int16_t y_delta);
+void bsp_event_handler(bsp_event_t event);
+void battery_level_update(void);
+void sensor_simulator_init(void);
+void sleep_mode_enter(void);
+
 
 #endif
