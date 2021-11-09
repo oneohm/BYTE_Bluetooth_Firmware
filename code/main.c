@@ -18,6 +18,7 @@
 #include "sensorDrivers.h"
 
 APP_TIMER_DEF(m_battery_timer_id);                                                  /**< Battery timer. */
+APP_TIMER_DEF(m_ads_timer_id);                                                      /**< ADS timer. */
 
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
@@ -37,6 +38,20 @@ static void battery_level_meas_timeout_handler(void * p_context)
     battery_level_update();
 }
 
+static void ads_meas_timeout_handler(void * p_context)
+{
+    UNUSED_PARAMETER(p_context);
+    int16_t adcValue[4];
+    float voltage[4];
+    for(int i=0;i<4;i++){
+     adcValue[i] = readADC_SingleEnded(i);
+     voltage[i]= computeVolts(adcValue[i]);
+     NRF_LOG_INFO("ADC %d:" NRF_LOG_FLOAT_MARKER" v \r\n",i,NRF_LOG_FLOAT(voltage[i]));
+    }
+    NRF_LOG_FLUSH();
+    
+}
+
 
 /**@brief Function for the Timer initialization.
  *
@@ -54,6 +69,12 @@ static void timers_init(void)
                                 APP_TIMER_MODE_REPEATED,
                                 battery_level_meas_timeout_handler);
     APP_ERROR_CHECK(err_code);
+
+    // Create battery timer.
+    err_code = app_timer_create(&m_ads_timer_id,
+                                APP_TIMER_MODE_REPEATED,
+                                ads_meas_timeout_handler);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -64,6 +85,8 @@ static void timers_start(void)
     ret_code_t err_code;
 
     err_code = app_timer_start(m_battery_timer_id, BATTERY_LEVEL_MEAS_INTERVAL, NULL);
+    APP_ERROR_CHECK(err_code);
+    err_code = app_timer_start(m_ads_timer_id, ADS_LEVEL_MEAS_INTERVAL, NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -137,9 +160,6 @@ int main(void)
     //Configure P1 to P3 as inputs, P0 as output
     PTCA9536_Set_Configuration(PTCA_P1|PTCA_P2|PTCA_P3);
     PTCA9536_Set_Output(0x00); //Put all outputs as 
-    
-    int16_t adcValue = readADC_SingleEnded(1);
-    float voltage = computeVolts(adcValue);
 
     buttons_leds_init(&erase_bonds);
     power_management_init();
