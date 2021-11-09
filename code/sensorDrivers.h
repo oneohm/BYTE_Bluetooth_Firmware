@@ -22,9 +22,9 @@
 #define PTCA_P2 0x04
 #define PTCA_P3 0x08
 
-#define ADS1115_ADDRESS
+#define ADS1115_ADDRESS 0x48
 
-#define DRV2605_ADDRESS
+#define DRV2605_ADDRESS 0x5A
 
 #define MAGNETIC_SENSOR_1_ADDRESS 0X31
 #define MAGNETIC_SENSOR_1_ADDRESS 0X32
@@ -36,5 +36,7 @@ void twi_scanner(void);
 
 void PTCA9536_Set_Configuration(uint8_t port);
 void PTCA9536_Set_Output(uint8_t port);
+
+uint16_t ADS1115_Read(uint8_t reg);
 
 #endif

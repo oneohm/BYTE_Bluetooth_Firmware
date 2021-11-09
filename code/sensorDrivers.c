@@ -1,5 +1,6 @@
 #include "sensorDrivers.h"
 
+
 /* TWI instance. */
 static const nrf_drv_twi_t m_twi = NRF_DRV_TWI_INSTANCE(TWI_INSTANCE_ID);
 
@@ -17,7 +18,7 @@ void twi_init (void)
        .clear_bus_init     = false
     };
 
-    err_code = nrf_drv_twi_init(&m_twi, &twi_config, NULL, NULL);
+    err_code = nrf_drv_twi_init(&m_twi, &twi_config, NULL, NULL); 
     APP_ERROR_CHECK(err_code);
 
     nrf_drv_twi_enable(&m_twi);
@@ -81,3 +82,14 @@ void PTCA9536_Set_Output(uint8_t port)
 }
 
 
+uint16_t ADS1115_Read(uint8_t reg) {
+  uint8_t buffer[3];
+  buffer[0] = reg;
+  APP_ERROR_CHECK(nrf_drv_twi_tx(&m_twi, ADS1115_ADDRESS, buffer, 1, false));
+  APP_ERROR_CHECK(nrf_drv_twi_rx(&m_twi, ADS1115_ADDRESS, buffer, 2));
+  return ((buffer[0] << 8) | buffer[1]);
+}
+
+
+
+        

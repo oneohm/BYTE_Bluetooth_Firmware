@@ -135,8 +135,9 @@ int main(void)
     twi_init();
     twi_scanner();
     //Configure P1 to P3 as inputs, P0 as output
-    PTCA9536_Set_Configuration(PTCA_P1|PTCA_P2|PTCA_P3);
-    PTCA9536_Set_Output(0x00); //Put all outputs as 0
+    //PTCA9536_Set_Configuration(PTCA_P1|PTCA_P2|PTCA_P3);
+    //PTCA9536_Set_Output(0x00); //Put all outputs as 
+    ADS1115_Read(0x01);
     
     buttons_leds_init(&erase_bonds);
     power_management_init();
@@ -148,7 +149,7 @@ int main(void)
     services_init();
     sensor_simulator_init();
     conn_params_init();
-    peer_manager_init()
+    peer_manager_init();
 
     timers_start();
     advertising_start(erase_bonds);
