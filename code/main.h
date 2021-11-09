@@ -32,6 +32,8 @@
 #include "nrf_pwr_mgmt.h"
 #include "peer_manager_handler.h"
 
+#include "nrf_drv_twi.h"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
