@@ -49,7 +49,18 @@ static void ads_meas_timeout_handler(void * p_context)
      NRF_LOG_INFO("ADC %d:" NRF_LOG_FLOAT_MARKER" v \r\n",i,NRF_LOG_FLOAT(voltage[i]));
     }
     NRF_LOG_FLUSH();
-    
+    int16_t yForceA = (adcValue[2]+adcValue[3])/2-(adcValue[0]+adcValue[1])/2; 
+    int16_t xForceA = (adcValue[1]+adcValue[3])/2-(adcValue[0]+adcValue[2])/2;
+    // Compute the cartesian coordinated force
+    int16_t y45Force = (adcValue[3]-adcValue[0])/2;
+    int16_t x45Force = (adcValue[1]-adcValue[2])/2;
+    // Compute the cartesian coordinated force
+    int16_t yForceB = (y45Force-x45Force)/(0.70710678118);
+    int16_t xForceB = (x45Force+y45Force)/(0.70710678118);
+    // Average the two computed forces
+    int16_t yForce = (yForceA+yForceB)/2;
+    int16_t xForce = (xForceA+xForceB)/2;
+    mouse_movement_send(xForce, yForce);
 }
 
 
