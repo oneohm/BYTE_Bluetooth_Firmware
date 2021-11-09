@@ -13,7 +13,7 @@ extern "C" {
 #define LED_1          NRF_GPIO_PIN_MAP(0,13)
 #define LED_2          NRF_GPIO_PIN_MAP(0,14)
 #define LED_START      LED_1
-#define LED_STOP       LED_4
+#define LED_STOP       LED_2
 
 #define LEDS_ACTIVE_STATE 0
 

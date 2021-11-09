@@ -146,6 +146,10 @@
       <file file_name="../../../components/softdevice/common/nrf_sdh_ble.c" />
       <file file_name="../../../components/softdevice/common/nrf_sdh_soc.c" />
     </folder>
+    <folder Name="Sensor_drivers">
+      <file file_name="code/sensorDrivers.c" />
+      <file file_name="code/sensorDrivers.h" />
+    </folder>
   </project>
   <configuration
     Name="Release"
