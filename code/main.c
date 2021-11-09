@@ -135,10 +135,12 @@ int main(void)
     twi_init();
     twi_scanner();
     //Configure P1 to P3 as inputs, P0 as output
-    //PTCA9536_Set_Configuration(PTCA_P1|PTCA_P2|PTCA_P3);
-    //PTCA9536_Set_Output(0x00); //Put all outputs as 
-    ADS1115_Read(0x01);
+    PTCA9536_Set_Configuration(PTCA_P1|PTCA_P2|PTCA_P3);
+    PTCA9536_Set_Output(0x00); //Put all outputs as 
     
+    int16_t adcValue = readADC_SingleEnded(1);
+    float voltage = computeVolts(adcValue);
+
     buttons_leds_init(&erase_bonds);
     power_management_init();
     ble_stack_init();
